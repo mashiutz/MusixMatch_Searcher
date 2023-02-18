@@ -7,7 +7,14 @@ function RestApiInvoker ([string]$endpoint, [string]$query, [string]$key, $Metho
     $QueryUriStr = $endpoint + $query + "&apikey=$key"
     Write-Host "Query URI string is $QueryUriStr"
     try {
-        $response = Invoke-RestMethod -Uri $QueryUriStr -Method $Method -SkipCertificateCheck -ErrorAction Stop
+        # if script is running from windows
+        if ($PSVersionTable.PSVersion.Major -eq 5) {
+            $response = Invoke-RestMethod -Uri $QueryUriStr -Method $Method -ErrorAction Stop    
+        }
+        # if from linux
+        else {
+            $response = Invoke-RestMethod -Uri $QueryUriStr -Method $Method -SkipCertificateCheck -ErrorAction Stop
+        }
         if ($response.message.header.status_code -ne 200) {
             Write-Host "Rest Invocation is done, but status code is not 200"
             throw "http status code for rest invcation - $($response.message.header.status_code)"
