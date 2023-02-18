@@ -1,0 +1,14 @@
+{
+  "description": "Pode App for MusixMatch",
+  "license": "MIT",
+  "author": "Nahum Ella",
+  "scripts": {
+    "build": "psake",
+    "test": "invoke-pester ./tests/*.ps1",
+    "start": "./server.ps1",
+    "install": "yarn install --force --ignore-scripts --modules-folder pode_modules"
+  },
+  "main": ".server.ps1",
+  "version": "1.0.0",
+  "name": "pode_api_server"
+}
